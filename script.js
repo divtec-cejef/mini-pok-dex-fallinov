@@ -28,7 +28,7 @@ const typeColors = {
 };
 
 // Tableau d'objets représentant les Pokémon
-const pokemons = [
+const pokemonsTab = [
     { name: 'Pikachu', type: 'Électrique', level: 35, img: 'pikachu.png' },
     { name: 'Bulbizarre', type: 'Plante,Poison', level: 15, img: 'bulbizarre.png' },
     { name: 'Salamèche', type: 'Feu', level: 20, img: 'salameche.png' },
@@ -47,3 +47,34 @@ const pokemons = [
     { name: 'Ronflex', type: 'Normal', level: 45, img: 'ronflex.png' },
     { name: 'Mewtwo', type: 'Psy', level: 70, img: 'mewtwo.png' }
 ];
+
+/**
+ * Affiche le nom des pokémons dans la <div class="pokemon-container">
+ */
+function displayPokemons () {
+    // Récupération de l'élément HTML <div class="pokemon-container">
+    const divContainer = document.querySelector('.pokemon-container');
+
+    // Vide le contenu du container
+    divContainer.innerHTML = '';
+
+    // Si tableau est vide, si la taille est de 0
+    if(!pokemonsTab.length) {
+        divContainer.innerHTML = "<p>Dracaufeu a tout brûlé, aucun Pokémon ne correspond à ta recherche !</p>";
+        return; // Sort de la fonction
+    }
+
+    let resHTML = '';
+    // Pour chaque pokémon du tableau pokemons
+    for (let pokemon of pokemonsTab) {
+        // Ajoute à la fin (+=) un <p> avec le nom du Pokémon
+       resHTML += `<p>${pokemon.name}</p>`;
+    }
+    // resHTML est créé pour n'appeler qu'une fois innerHTML
+    // innerHTML est très gourmand en traitements, car il analyse
+    // la chaine de caractères pour créer les éléments HTML
+    divContainer.innerHTML = resHTML;
+}
+
+// Appelle la fonction displayPokemons()
+displayPokemons();
