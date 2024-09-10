@@ -53,7 +53,23 @@ const pokemonsTab = [
  * @param pokemon { name: 'Mewtwo', type: 'Psy', level: 70, img: 'mewtwo.png' } un objet Pokémon
  */
 function generatePokemonCardHTML(pokemon){
-    return `<div class="pokemon-card" style="background: #705898;">
+    let tabType = pokemon.type.split(',');
+    let type1 = tabType[0];
+    let type2 = tabType[1];
+    let bgColor = typeColors[type1];
+
+    // Si un deuxième type existe
+    if(type2) {
+        bgColor = `linear-gradient(to right, #78C850 50%, #A040A0 50%);`;
+    }
+
+
+
+
+
+    return `<div class="pokemon-card"
+                 style="background: ${bgColor};"
+            >
                 <img src="images/${pokemon.img}" alt="${pokemon.name}">
                 <h2>${pokemon.name}</h2>
                 <div>Type: ${pokemon.type.replace(',', ' / ')}</div>
