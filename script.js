@@ -67,8 +67,20 @@ function displayPokemons () {
     let resHTML = '';
     // Pour chaque pokémon du tableau pokemons
     for (let pokemon of pokemonsTab) {
+        // Spliter les types
+        let tabTypes = pokemon.type.split(',');
+        console.log(tabTypes);
+
         // Ajoute à la fin (+=) un <p> avec le nom du Pokémon
-       resHTML += `<p>${pokemon.name}</p>`;
+        if(tabTypes.length === 1){
+            resHTML += `<p>${pokemon.name} <small>${tabTypes[0]}</small></p>`;
+        } else if (tabTypes.length === 2) {
+            resHTML += `<p>
+                            ${pokemon.name}
+                            <small>${tabTypes[0]}</small>
+                            <small>${tabTypes[1]}</small>
+                        </p>`;
+        }
     }
     // resHTML est créé pour n'appeler qu'une fois innerHTML
     // innerHTML est très gourmand en traitements, car il analyse
