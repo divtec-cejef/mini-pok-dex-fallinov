@@ -7,7 +7,7 @@
 'use strict';
 
 // Couleur par défaut pour les types de Pokémon non définis
-const DEFAULT_COLOR = '#ccc';
+const DEFAULT_COLOR = 'red';
 
 // Couleurs pour chaque type de Pokémon
 const typeColors = {
@@ -38,7 +38,7 @@ const pokemonsTab = [
     { name: 'Évoli', type: 'Normal,Combat', level: 22, img: 'evoli.png' },
     { name: 'Dracaufeu', type: 'Feu,Vol', level: 50, img: 'dracaufeu.png' },
     { name: 'Florizarre', type: 'Plante,Poison', level: 55, img: 'florizarre.png' },
-    { name: 'Tortank', type: 'Eau', level: 52, img: 'tortank.png' },
+    { name: 'Tortank', type: 'Eau,toto', level: 52, img: 'tortank.png' },
     { name: 'Mélofée', type: 'Fée', level: 18, img: 'melofee.png' },
     { name: 'Raichu', type: 'Électrique', level: 40, img: 'raichu.png' },
     { name: 'Magicarpe', type: 'Eau', level: 5, img: 'magicarpe.png' },
@@ -60,13 +60,9 @@ function generatePokemonCardHTML(pokemon){
 
     // Si un deuxième type existe
     if(type2) {
-        bgColor = `linear-gradient(to right, #78C850 50%, #A040A0 50%);`;
+        let t2 = typeColors[type2] || DEFAULT_COLOR;
+        bgColor = `linear-gradient(to right, ${typeColors[type1]} 50%, ${t2} 50%);`;
     }
-
-
-
-
-
     return `<div class="pokemon-card"
                  style="background: ${bgColor};"
             >
