@@ -49,42 +49,37 @@ const pokemonsTab = [
 ];
 
 /**
+ * Fonction qui retourne le code HTML de la carte du pokémon passé en paramètre
+ * @param pokemon { name: 'Mewtwo', type: 'Psy', level: 70, img: 'mewtwo.png' } un objet Pokémon
+ */
+function generatePokemonCardHTML(pokemon){
+    return `<div class="pokemon-card" style="background: #705898;">
+                <img src="images/${pokemon.img}" alt="${pokemon.name}">
+                <h2>${pokemon.name}</h2>
+                <div>Type: ${pokemon.type.replace(',', ' / ')}</div>
+                <div>Niveau: ${pokemon.level}</div>
+            </div>`;
+}
+
+/**
  * Affiche le nom des pokémons dans la <div class="pokemon-container">
  */
 function displayPokemons () {
     // Récupération de l'élément HTML <div class="pokemon-container">
     const divContainer = document.querySelector('.pokemon-container');
-
     // Vide le contenu du container
     divContainer.innerHTML = '';
-
     // Si tableau est vide, si la taille est de 0
     if(!pokemonsTab.length) {
         divContainer.innerHTML = "<p>Dracaufeu a tout brûlé, aucun Pokémon ne correspond à ta recherche !</p>";
         return; // Sort de la fonction
     }
-
     let resHTML = '';
     // Pour chaque pokémon du tableau pokemons
     for (let pokemon of pokemonsTab) {
-        // Spliter les types
-        let tabTypes = pokemon.type.split(',');
-        console.log(tabTypes);
-
-        // Ajoute à la fin (+=) un <p> avec le nom du Pokémon
-        if(tabTypes.length === 1){
-            resHTML += `<p>${pokemon.name} <small>${tabTypes[0]}</small></p>`;
-        } else if (tabTypes.length === 2) {
-            resHTML += `<p>
-                            ${pokemon.name}
-                            <small>${tabTypes[0]}</small>
-                            <small>${tabTypes[1]}</small>
-                        </p>`;
-        }
+        resHTML += generatePokemonCardHTML(pokemon);
     }
-    // resHTML est créé pour n'appeler qu'une fois innerHTML
-    // innerHTML est très gourmand en traitements, car il analyse
-    // la chaine de caractères pour créer les éléments HTML
+    // Ajoute les cartes au container
     divContainer.innerHTML = resHTML;
 }
 
