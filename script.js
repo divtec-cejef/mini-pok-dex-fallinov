@@ -48,6 +48,11 @@ const pokemonsTab = [
     { name: 'Mewtwo', type: 'Psy', level: 70, img: 'mewtwo.png' }
 ];
 
+// Récupération des éléments HTML
+const searchBar = document.getElementById('search-bar');
+const selectType = document.getElementById('type-filter');
+
+
 /**
  * Fonction qui retourne le code HTML de la carte du pokémon passé en paramètre
  * @param pokemon { name: 'Mewtwo', type: 'Psy', level: 70, img: 'mewtwo.png' } un objet Pokémon
@@ -76,24 +81,45 @@ function generatePokemonCardHTML(pokemon){
 /**
  * Affiche le nom des pokémons dans la <div class="pokemon-container">
  */
-function displayPokemons () {
+function displayPokemons (tabPokemons) {
     // Récupération de l'élément HTML <div class="pokemon-container">
     const divContainer = document.querySelector('.pokemon-container');
     // Vide le contenu du container
     divContainer.innerHTML = '';
     // Si tableau est vide, si la taille est de 0
-    if(!pokemonsTab.length) {
+    if(!tabPokemons.length) {
         divContainer.innerHTML = "<p>Dracaufeu a tout brûlé, aucun Pokémon ne correspond à ta recherche !</p>";
         return; // Sort de la fonction
     }
     let resHTML = '';
     // Pour chaque pokémon du tableau pokemons
-    for (let pokemon of pokemonsTab) {
+    for (let pokemon of tabPokemons) {
         resHTML += generatePokemonCardHTML(pokemon);
     }
     // Ajoute les cartes au container
     divContainer.innerHTML = resHTML;
 }
 
-// Appelle la fonction displayPokemons()
-displayPokemons();
+/**
+ * Fonction qui retourne les pokémon qui contiennent
+ * dans leur nom le texte recherché
+ * @returns {*[]} Tableau de Pokémons
+ */
+function filterAndSortPokemons () {
+    const recherche = searchBar.value;
+    // Filtre par txt dans le nom
+    let resultat = pokemonsTab.filter(pokemon => pokemon.name.toLowerCase().includes(recherche.toLowerCase()));
+
+    // Filtre par type
+    let type = selectType.value;
+    resultat = resultat.filter(pokemon => pokemon.type.includes(type));
+
+    displayPokemons(resultat)
+}
+
+// Appelle la fonction filterAndSortPokemons
+filterAndSortPokemons();
+
+// Evénements
+searchBar.addEventListener('input', filterAndSortPokemons);
+selectType.addEventListener('change', filterAndSortPokemons);
